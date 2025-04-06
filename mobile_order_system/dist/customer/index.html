@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モバイルオーダー</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <a href="#" class="header-back" id="back-button" style="display: none;"><i class="fas fa-chevron-left"></i></a>
+    <div class="header-title">期間限定・極みネタ</div>
+    <div class="header-menu"><i class="fas fa-bars"></i></div>
+  </header>
+
+  <div class="container">
+    <!-- メニュー画面 -->
+    <div class="page" id="menu-page">
+      <!-- カテゴリタブ -->
+      <div class="category-tabs">
+        <div class="category-tabs-scroll">
+          <a href="#" class="category-tab active">期間限定・極みネタ</a>
+          <a href="#" class="category-tab">にぎり</a>
+          <a href="#" class="category-tab">軍艦・巻物</a>
+          <a href="#" class="category-tab">サイド</a>
+          <a href="#" class="category-tab">ドリンク</a>
+          <a href="#" class="category-tab">デザート</a>
+        </div>
+      </div>
+
+      <!-- サブカテゴリタブ -->
+      <div class="subcategory-tabs">
+        <a href="#" class="subcategory-tab active">期間限定 1</a>
+        <a href="#" class="subcategory-tab">期間限定 2</a>
+        <a href="#" class="subcategory-tab">期間限定 3</a>
+      </div>
+
+      <!-- メニューリスト -->
+      <div class="menu-list">
+        <!-- メニューアイテム -->
+        <div class="menu-item" data-item-id="1">
+          <div class="menu-item-image-container">
+            <img src="img/sushi1.jpg" alt="富山県産 白えび" class="menu-item-image">
+            <div class="menu-item-badge">本日おすすめ</div>
+          </div>
+          <div class="menu-item-info">
+            <div class="menu-item-name">1貫富山県産 白えび</div>
+            <div class="menu-item-description">北海道産 なまこ</div>
+            <div class="menu-item-price">¥ 330<span class="menu-item-tax">(税込)</span></div>
+          </div>
+        </div>
+
+        <!-- メニューアイテム -->
+        <div class="menu-item" data-item-id="2">
+          <div class="menu-item-image-container">
+            <img src="img/sushi2.jpg" alt="肩ロースハム 生ハムマルマヨ" class="menu-item-image">
+          </div>
+          <div class="menu-item-info">
+            <div class="menu-item-name">肩ロースハム 生ハムマルマヨ</div>
+            <div class="menu-item-description">北海道産 なまこ 北海道産 なまこ</div>
+            <div class="menu-item-price">¥ 220<span class="menu-item-tax">(税込)</span></div>
+          </div>
+        </div>
+
+        <!-- メニューアイテム -->
+        <div class="menu-item" data-item-id="3">
+          <div class="menu-item-image-container">
+            <img src="img/sushi3.jpg" alt="サーモン" class="menu-item-image">
+          </div>
+          <div class="menu-item-info">
+            <div class="menu-item-name">サーモン</div>
+            <div class="menu-item-description">新鮮なサーモン</div>
+            <div class="menu-item-price">¥ 180<span class="menu-item-tax">(税込)</span></div>
+          </div>
+        </div>
+
+        <!-- メニューアイテム -->
+        <div class="menu-item" data-item-id="4">
+          <div class="menu-item-image-container">
+            <img src="img/sushi4.jpg" alt="マグロ" class="menu-item-image">
+          </div>
+          <div class="menu-item-info">
+            <div class="menu-item-name">マグロ</div>
+            <div class="menu-item-description">上質なマグロ</div>
+            <div class="menu-item-price">¥ 250<span class="menu-item-tax">(税込)</span></div>
+          </div>
+        </div>
+
+        <!-- メニューアイテム -->
+        <div class="menu-item" data-item-id="5">
+          <div class="menu-item-image-container">
+            <img src="img/sushi5.jpg" alt="エビ" class="menu-item-image">
+            <div class="menu-item-sold-out">完売</div>
+          </div>
+          <div class="menu-item-info">
+            <div class="menu-item-name">エビ</div>
+            <div class="menu-item-description">新鮮なエビ</div>
+            <div class="menu-item-price">¥ 200<span class="menu-item-tax">(税込)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- カートサマリー -->
+      <div class="cart-summary" id="cart-summary" style="display: none;">
+        <div class="cart-summary-text"><span id="cart-count">0</span>点 ¥<span id="cart-total">0</span></div>
+        <button class="cart-summary-button">注文する</button>
+      </div>
+    </div>
+
+    <!-- 注文履歴画面 -->
+    <div class="page" id="history-page" style="display: none;">
+      <div class="order-history">
+        <div class="order-card">
+          <div class="order-card-header">
+            <div class="order-number">注文 #1001</div>
+            <div class="order-status">準備中</div>
+          </div>
+          <div class="order-card-body">
+            <div class="order-item">
+              <div class="order-item-name">富山県産 白えび</div>
+              <div class="order-item-quantity">× 2</div>
+              <div class="order-item-price">¥ 660</div>
+            </div>
+            <div class="order-item">
+              <div class="order-item-name">肩ロースハム 生ハムマルマヨ</div>
+              <div class="order-item-quantity">× 1</div>
+              <div class="order-item-price">¥ 220</div>
+            </div>
+          </div>
+          <div class="order-card-footer">
+            <div class="order-total">合計: ¥ 880</div>
+            <div class="order-date">2025/04/03 10:15</div>
+          </div>
+        </div>
+
+        <div class="order-card">
+          <div class="order-card-header">
+            <div class="order-number">注文 #1000</div>
+            <div class="order-status completed">完了</div>
+          </div>
+          <div class="order-card-body">
+            <div class="order-item">
+              <div class="order-item-name">サーモン</div>
+              <div class="order-item-quantity">× 3</div>
+              <div class="order-item-price">¥ 540</div>
+            </div>
+            <div class="order-item">
+              <div class="order-item-name">マグロ</div>
+              <div class="order-item-quantity">× 2</div>
+              <div class="order-item-price">¥ 500</div>
+            </div>
+          </div>
+          <div class="order-card-footer">
+            <div class="order-total">合計: ¥ 1,040</div>
+            <div class="order-date">2025/04/03 09:30</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 呼び出し画面 -->
+    <div class="page" id="call-page" style="display: none;">
+      <div class="call-buttons">
+        <a href="#" class="call-button" id="call-staff">
+          <i class="fas fa-bell"></i> スタッフを呼ぶ
+        </a>
+        <a href="#" class="call-button" id="call-water">
+          <i class="fas fa-tint"></i> お水をお願いする
+        </a>
+        <a href="#" class="call-button" id="call-condiments">
+          <i class="fas fa-utensils"></i> 調味料をお願いする
+        </a>
+        <a href="#" class="call-button" id="call-chopsticks">
+          <i class="fas fa-utensil-spoon"></i> お箸・スプーンをお願いする
+        </a>
+      </div>
+    </div>
+
+    <!-- 会計画面 -->
+    <div class="page" id="payment-page" style="display: none;">
+      <div class="payment">
+        <div class="payment-summary">
+          <div class="payment-item">
+            <div>富山県産 白えび × 2</div>
+            <div>¥ 660</div>
+          </div>
+          <div class="payment-item">
+            <div>肩ロースハム 生ハムマルマヨ × 1</div>
+            <div>¥ 220</div>
+          </div>
+          <div class="payment-item">
+            <div>サーモン × 3</div>
+            <div>¥ 540</div>
+          </div>
+          <div class="payment-item">
+            <div>マグロ × 2</div>
+            <div>¥ 500</div>
+          </div>
+          <div class="payment-total">
+            <div>合計</div>
+            <div>¥ 1,920</div>
+          </div>
+        </div>
+
+        <div class="payment-methods">
+          <button class="payment-method" id="payment-cash">
+            <i class="fas fa-money-bill-wave"></i> 現金で支払う
+          </button>
+          <button class="payment-method" id="payment-card">
+            <i class="fas fa-credit-card"></i> クレジットカードで支払う
+          </button>
+          <button class="payment-method" id="payment-mobile">
+            <i class="fas fa-mobile-alt"></i> モバイル決済で支払う
+          </button>
+        </div>
+
+        <div class="payment-barcode" id="payment-barcode-container" style="display: none;">
+          <svg id="payment-barcode-svg"></svg>
+          <div class="payment-instructions">
+            このバーコードをスタッフに見せてください
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- フッターナビゲーション -->
+  <nav class="footer-nav">
+    <a href="#" class="footer-nav-item active" data-page="menu">
+      <i class="fas fa-home"></i>
+      <span>トップ</span>
+    </a>
+    <a href="#" class="footer-nav-item" data-page="menu">
+      <i class="fas fa-book-open"></i>
+      <span>メニュー</span>
+    </a>
+    <a href="#" class="footer-nav-item" data-page="history">
+      <i class="fas fa-clipboard-list"></i>
+      <span>注文履歴</span>
+    </a>
+    <a href="#" class="footer-nav-item" data-page="payment">
+      <i class="fas fa-wallet"></i>
+      <span>お会計</span>
+    </a>
+  </nav>
+
+  <!-- 商品詳細モーダル -->
+  <div class="modal" id="item-detail-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">商品詳細</div>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <img src="" alt="" class="item-detail-image" id="detail-image">
+        <div class="item-detail-info">
+          <div class="item-detail-name" id="detail-name"></div>
+          <div class="item-detail-description" id="detail-description"></div>
+          <div class="item-detail-price" id="detail-price"></div>
+          <div class="item-detail-quantity">
+            <button class="quantity-button" id="decrease-quantity">-</button>
+            <div class="quantity-value" id="quantity-value">1</div>
+            <button class="quantity-button" id="increase-quantity">+</button>
+          </div>
+          <button class="add-to-cart-button" id="add-to-cart-button">カートに追加</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- カートモーダル -->
+  <div class="modal" id="cart-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">カート</div>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="cart-list" id="cart-list">
+          <!-- カートアイテムがここに表示されます -->
+        </div>
+        <div class="cart-summary-section">
+          <div class="cart-summary-row">
+            <div>小計</div>
+            <div>¥<span id="cart-subtotal">0</span></div>
+          </div>
+          <div class="cart-summary-row">
+            <div>消費税 (10%)</div>
+            <div>¥<span id="cart-tax">0</span></div>
+          </div>
+          <div class="cart-total-row">
+            <div>合計</div>
+            <div>¥<span id="cart-modal-total">0</span></div>
+          </div>
+        </div>
+        <button class="order-button" id="proceed-to-order">注文する</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 注文確認モーダル -->
+  <div class="modal" id="order-confirmation-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">注文確認</div>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="order-confirmation-items" id="order-confirmation-items">
+          <!-- 注文アイテムがここに表示されます -->
+        </div>
+        <div class="order-confirmation-total">
+          <div>合計</div>
+          <div>¥<span id="order-confirmation-total">0</span></div>
+        </div>
+        <button class="confirm-order-button" id="confirm-order-button">注文を確定する</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 呼び出し確認モーダル -->
+  <div class="modal" id="call-confirmation-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">呼び出し確認</div>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p id="call-confirmation-message"></p>
+        <div class="modal-footer">
+          <button class="btn btn-danger modal-close-btn">キャンセル</button>
+          <button class="confirm-order-button" id="confirm-call-button">呼び出す</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 通知 -->
+  <div class="notification" id="notification" style="display: none;"></div>
+
+  <!-- スクリプト -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

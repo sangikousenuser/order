@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モバイルオーダー管理画面</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- サイドバーナビゲーション -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h1>モバイルオーダー</h1>
+        <p>管理システム</p>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> ダッシュボード</a></li>
+        <li><a href="#" data-page="tables"><i class="fas fa-chair"></i> テーブル管理</a></li>
+        <li><a href="#" data-page="menu"><i class="fas fa-utensils"></i> メニュー管理</a></li>
+        <li><a href="#" data-page="orders"><i class="fas fa-clipboard-list"></i> 注文管理</a></li>
+        <li><a href="#" data-page="qr-scanner"><i class="fas fa-qrcode"></i> QRコードスキャナー</a></li>
+        <li><a href="#" data-page="barcode-reader"><i class="fas fa-barcode"></i> バーコード会計</a></li>
+        <li><a href="#" data-page="settings"><i class="fas fa-cog"></i> 設定</a></li>
+        <li><a href="#" data-page="logout"><i class="fas fa-sign-out-alt"></i> ログアウト</a></li>
+      </ul>
+    </div>
+
+    <!-- メインコンテンツエリア -->
+    <div class="main-content">
+      <!-- ダッシュボード -->
+      <div class="page" id="dashboard-page">
+        <div class="header">
+          <h2>ダッシュボード</h2>
+          <div>
+            <span id="current-date"></span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="card">
+            <div class="card-header">
+              概要
+            </div>
+            <div class="card-body">
+              <div class="dashboard-stats">
+                <div class="stat-item">
+                  <h3>本日の注文</h3>
+                  <p class="stat-value">0</p>
+                </div>
+                <div class="stat-item">
+                  <h3>売上高</h3>
+                  <p class="stat-value">¥0</p>
+                </div>
+                <div class="stat-item">
+                  <h3>使用中テーブル</h3>
+                  <p class="stat-value">0 / 6</p>
+                </div>
+                <div class="stat-item">
+                  <h3>対応待ち呼出</h3>
+                  <p class="stat-value">0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="card">
+            <div class="card-header">
+              最近の注文
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>注文ID</th>
+                      <th>テーブル</th>
+                      <th>金額</th>
+                      <th>ステータス</th>
+                      <th>時間</th>
+                      <th>アクション</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-orders">
+                    <tr>
+                      <td colspan="6" class="text-center">注文データがありません</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- テーブル管理 -->
+      <div class="page" id="tables-page" style="display: none;">
+        <div class="header">
+          <h2>テーブル管理</h2>
+          <button class="btn" id="add-table-btn"><i class="fas fa-plus"></i> 新規テーブル追加</button>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            テーブル一覧
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>テーブル番号</th>
+                    <th>収容人数</th>
+                    <th>ステータス</th>
+                    <th>QRコード</th>
+                    <th>アクション</th>
+                  </tr>
+                </thead>
+                <tbody id="tables-list">
+                  <!-- テーブルデータがここに表示されます -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- メニュー管理 -->
+      <div class="page" id="menu-page" style="display: none;">
+        <div class="header">
+          <h2>メニュー管理</h2>
+          <div>
+            <button class="btn" id="add-category-btn"><i class="fas fa-folder-plus"></i> カテゴリ追加</button>
+            <button class="btn" id="add-menu-item-btn"><i class="fas fa-plus"></i> メニュー追加</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            メニューカテゴリ
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>カテゴリ名</th>
+                    <th>表示順</th>
+                    <th>アクション</th>
+                  </tr>
+                </thead>
+                <tbody id="categories-list">
+                  <!-- カテゴリデータがここに表示されます -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            メニュー一覧
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>画像</th>
+                    <th>名前</th>
+                    <th>カテゴリ</th>
+                    <th>価格</th>
+                    <th>在庫状況</th>
+                    <th>アクション</th>
+                  </tr>
+                </thead>
+                <tbody id="menu-items-list">
+                  <!-- メニューデータがここに表示されます -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 注文管理 -->
+      <div class="page" id="orders-page" style="display: none;">
+        <div class="header">
+          <h2>注文管理</h2>
+          <div>
+            <select id="order-status-filter" class="form-control">
+              <option value="all">すべてのステータス</option>
+              <option value="pending">未処理</option>
+              <option value="processing">処理中</option>
+              <option value="completed">完了</option>
+              <option value="cancelled">キャンセル</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            注文一覧
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>注文ID</th>
+                    <th>テーブル</th>
+                    <th>金額</th>
+                    <th>ステータス</th>
+                    <th>支払い状況</th>
+                    <th>時間</th>
+                    <th>アクション</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-list">
+                  <!-- 注文データがここに表示されます -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QRコードスキャナー -->
+      <div class="page" id="qr-scanner-page" style="display: none;">
+        <div class="header">
+          <h2>QRコードスキャナー</h2>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            QRコードをスキャン
+          </div>
+          <div class="card-body">
+            <div class="qr-scanner">
+              <div class="qr-scanner-preview" id="qr-preview">
+                <div class="qr-scanner-overlay"></div>
+              </div>
+              <div class="text-center mt-3">
+                <button class="btn" id="start-scanner-btn"><i class="fas fa-camera"></i> スキャン開始</button>
+                <button class="btn btn-danger" id="stop-scanner-btn" style="display: none;"><i class="fas fa-stop"></i> スキャン停止</button>
+              </div>
+            </div>
+            <div class="mt-4">
+              <div class="alert alert-info">
+                <p>QRコードをスキャンして、テーブルの注文情報を確認したり、支払い処理を行うことができます。</p>
+              </div>
+              <div id="scan-result" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- バーコード会計 -->
+      <div class="page" id="barcode-reader-page" style="display: none;">
+        <div class="header">
+          <h2>バーコード会計</h2>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            バーコードを読み取る
+          </div>
+          <div class="card-body">
+            <div class="barcode-reader">
+              <div class="form-group">
+                <label for="barcode-input">バーコード入力</label>
+                <input type="text" id="barcode-input" class="form-control" placeholder="バーコードをスキャンまたは入力してEnterキーを押してください">
+              </div>
+              <div class="text-center mt-3">
+                <p>ステータス: <span id="barcode-reader-status">停止中</span></p>
+                <button class="btn" id="start-barcode-reader-btn"><i class="fas fa-play"></i> 読み取り開始</button>
+                <button class="btn btn-danger" id="stop-barcode-reader-btn" style="display: none;"><i class="fas fa-stop"></i> 読み取り停止</button>
+              </div>
+            </div>
+            <div class="mt-4">
+              <div class="alert alert-info">
+                <p>お客様の支払い用バーコードを読み取ることで、注文情報を確認し会計処理を行うことができます。</p>
+                <p>バーコードリーダーを接続するか、手動で入力してEnterキーを押してください。</p>
+              </div>
+              <div id="barcode-result" class="mt-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 設定 -->
+      <div class="page" id="settings-page" style="display: none;">
+        <div class="header">
+          <h2>設定</h2>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            システム設定
+          </div>
+          <div class="card-body">
+            <form id="settings-form">
+              <div class="form-group">
+                <label for="restaurant-name">店舗名</label>
+                <input type="text" id="restaurant-name" class="form-control" value="サンプルレストラン">
+              </div>
+              <div class="form-group">
+                <label for="tax-rate">消費税率 (%)</label>
+                <input type="number" id="tax-rate" class="form-control" value="10" min="0" max="100">
+              </div>
+              <div class="form-group">
+                <label for="service-charge">サービス料 (%)</label>
+                <input type="number" id="service-charge" class="form-control" value="0" min="0" max="100">
+              </div>
+              <div class="form-group">
+                <label>自動注文受付</label>
+                <div>
+                  <label class="switch">
+                    <input type="checkbox" id="auto-accept-orders" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn">設定を保存</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- モーダル -->
+  <!-- テーブル追加/編集モーダル -->
+  <div class="modal" id="table-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="table-modal-title">テーブルを追加</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="table-form">
+          <input type="hidden" id="table-id">
+          <div class="form-group">
+            <label for="table-number">テーブル番号</label>
+            <input type="text" id="table-number" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="table-capacity">収容人数</label>
+            <input type="number" id="table-capacity" class="form-control" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="table-status">ステータス</label>
+            <select id="table-status" class="form-control">
+              <option value="available">利用可能</option>
+              <option value="occupied">使用中</option>
+              <option value="reserved">予約済み</option>
+              <option value="maintenance">メンテナンス中</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger modal-close-btn">キャンセル</button>
+        <button class="btn" id="save-table-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- カテゴリ追加/編集モーダル -->
+  <div class="modal" id="category-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="category-modal-title">カテゴリを追加</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="category-form">
+          <input type="hidden" id="category-id">
+          <div class="form-group">
+            <label for="category-name">カテゴリ名</label>
+            <input type="text" id="category-name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="category-order">表示順</label>
+            <input type="number" id="category-order" class="form-control" min="0" value="0" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger modal-close-btn">キャンセル</button>
+        <button class="btn" id="save-category-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- メニュー追加/編集モーダル -->
+  <div class="modal" id="menu-item-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="menu-item-modal-title">メニューを追加</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="menu-item-form">
+          <input type="hidden" id="menu-item-id">
+          <div class="form-group">
+            <label for="menu-item-name">メニュー名</label>
+            <input type="text" id="menu-item-name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="menu-item-category">カテゴリ</label>
+            <select id="menu-item-category" class="form-control" required>
+              <!-- カテゴリオプションがここに表示されます -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="menu-item-description">説明</label>
+            <textarea id="menu-item-description" class="form-control" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="menu-item-price">価格 (円)</label>
+            <input type="number" id="menu-item-price" class="form-control" min="0" required>
+          </div>
+          <div class="form-group">
+            <label for="menu-item-image">画像</label>
+            <input type="file" id="menu-item-image" class="form-control" accept="image/*">
+            <div id="menu-item-image-preview" class="mt-2"></div>
+          </div>
+          <div class="form-group">
+            <label for="menu-item-order">表示順</label>
+            <input type="number" id="menu-item-order" class="form-control" min="0" value="0">
+          </div>
+          <div class="form-group">
+            <label>在庫状況</label>
+            <div>
+              <label class="switch">
+                <input type="checkbox" id="menu-item-available" checked>
+                <span class="slider"></span>
+              </label>
+              <span id="availability-status">利用可能</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>おすすめ表示</label>
+            <div>
+              <label class="switch">
+                <input type="checkbox" id="menu-item-featured">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger modal-close-btn">キャンセル</button>
+        <button class="btn" id="save-menu-item-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 注文詳細モーダル -->
+  <div class="modal" id="order-detail-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>注文詳細</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="order-info">
+          <p><strong>注文ID:</strong> <span id="order-id"></span></p>
+          <p><strong>テーブル:</strong> <span id="order-table"></span></p>
+          <p><strong>時間:</strong> <span id="order-time"></span></p>
+          <p><strong>ステータス:</strong> <span id="order-status"></span></p>
+          <p><strong>支払い状況:</strong> <span id="order-payment"></span></p>
+        </div>
+        <div class="table-container mt-3">
+          <table>
+            <thead>
+              <tr>
+                <th>商品</th>
+                <th>数量</th>
+                <th>単価</th>
+                <th>小計</th>
+                <th>ステータス</th>
+              </tr>
+            </thead>
+            <tbody id="order-items">
+              <!-- 注文アイテムがここに表示されます -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="text-right"><strong>小計</strong></td>
+                <td id="order-subtotal"></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="3" class="text-right"><strong>消費税 (10%)</strong></td>
+                <td id="order-tax"></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="3" class="text-right"><strong>合計</strong></td>
+                <td id="order-total"></td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="cancel-order-btn">注文キャンセル</button>
+        <button class="btn btn-warning" id="update-order-status-btn">ステータス変更</button>
+        <button class="btn btn-success" id="complete-order-btn">注文完了</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QRコード表示モーダル -->
+  <div class="modal" id="qr-code-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>テーブルQRコード</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body text-center">
+        <div id="qr-code-container"></div>
+        <p class="mt-3">テーブル: <span id="qr-table-number"></span></p>
+        <button class="btn" id="print-qr-btn"><i class="fas fa-print"></i> 印刷</button>
+        <button class="btn" id="download-qr-btn"><i class="fas fa-download"></i> ダウンロード</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/barcode_reader.js"></script>
+</body>
+</html>
